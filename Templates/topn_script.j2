@@ -1,0 +1,12 @@
+array<uint> indices;
+{% for i in range(analysisCount) %}
+indices.insertLast({{ i }});
+{% endfor %}
+string errorMessage;
+{% if topnBy == "assets" %}
+if (!TopnAssetsV2('TopNData', @indices, errorMessage)) {
+{% else %}
+if (!TopnContractsV2('TopNDataContract', @indices, errorMessage)) {
+{% endif %}
+    Send('Error!', errorMessage);
+}

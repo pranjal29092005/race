@@ -1,0 +1,87 @@
+{
+{% for a in analysisList %}
+  {% set date = a.date %} 
+"Analysis{{ loop.index0 }}": {
+  {% if date -%}
+    "AnalysisDateBegin": {"Day": {{ date.Day }}, "Month": {{ date.Month }}, "Year": {{ date.Year }}},
+    "AnalysisDateEnd": {"Day": {{ date.Day }}, "Month": {{ date.Month }}, "Year": {{ date.Year }}},
+  {%- endif %}
+    "BaseAssetTypeCodes": ["Site"],
+    "CurrencyCode": "USD",
+    {% if damageFunctionId %}"DamageFunctionID": {{ damageFunctionId }},{% endif %}
+    "ValuationTypeCode": 1,
+    {% if handDrawnEvent %}{% include "handdrawn.j2" %}, {% endif %}
+    {% if events %}{% include "events.j2" %}, {% endif %}
+    "ExposureFilterSets": {
+        "AssetModel": "ERBASICS"
+        {% if filters %}
+        ,"FilterList": [
+        {% for f in filters %}
+        {
+            "AndOr": "{{ filterType }}",
+            "FilterList": [
+            {
+                "AndOr": "{{f.andor}}",
+                "AssetType": "{{f.assetType}}",
+                "Attribute": "{{ f.attr }}",
+                "Operator": "{{ f.op }}",
+                "Value": "{{ f.value }}"
+            }
+            ]
+        }{% if not loop.last %},{% endif %}
+        {% endfor %}
+        ]
+        {% endif %}
+        {% if shapesFilter %}
+        ,"ShapesFilter": [
+        {
+            "AndOr": "AND",
+            "FilterList": [
+            {
+                "AndOr": "AND",
+                "features": [
+                {% for feature in shapesFilter.features %}
+                {
+                    "CenterLat": {{ feature.CenterLat }},
+                    "CenterLon": {{ feature.CenterLon }},
+                    "Concentrics": [
+                      {% for concentric in feature.Concentrics %}
+                      {
+                        "Radii": {{ concentric.Radii }},
+                        "Intensity": {{ concentric.Intensity }},
+                        "Unit": "{{ concentric.Unit }}",
+                        "unitType": {
+                          "name": "{{ concentric.unitType.name }}",
+                          "unit": "{{ concentric.unitType.unit }}"
+                        }
+                      }{% if not loop.last %},{% endif %}
+                      {% endfor %}
+                    ],
+                    "Radii": {{ feature.Radii }},
+                    "properties": {
+                        "UserShapeType": "{{ feature.properties.UserShapeType }}",
+                        "selectedUnit": "{{ feature.properties.selectedUnit }}",
+                        "shapeDrawnOnMap": "{{ feature.properties.shapeDrawnOnMap }}",
+                        "shapeId": "{{ feature.properties.shapeId }}"
+                    },
+                    "type": "{{ feature.type }}"
+                }{% if not loop.last %},{% endif %}
+                {% endfor %}
+                ]
+            }
+            ]
+        }
+        ]
+        {% endif %}
+    },
+    "IgnoreOutOfBoundAssets": true,
+    "IncludeAllContracts": false,
+    "UserId": "{{ userId }}",
+    {% if program %}
+      "ProgramId": {{ program }},
+    {% endif %}
+    "damageAdjustment": 1,
+    "quantile": 50
+    }{% if not loop.last %},{% endif %}
+{% endfor %}
+}

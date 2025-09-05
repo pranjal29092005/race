@@ -1,0 +1,10 @@
+{
+    "GetSummary": {
+        "additionalMeasures": [
+            {% for v in vars %}
+            "{{ v }}"
+              {% if not loop.last %},{% endif %}
+            {% endfor %}
+        ]
+    }
+}

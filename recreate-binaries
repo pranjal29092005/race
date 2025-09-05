@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+script_path=`readlink -f ${BASH_SOURCE:-$0}`
+this_dir=`dirname $script_path`
+build_dir=`readlink -f $this_dir/../build`
+env_sh=$build_dir/scripts/alpha.sh
+source $env_sh
+for exp in 23511 23512 23513 23514 23515
+# for exp in 23512
+do
+    echo "--------------------"
+    echo "Modifying $exp ..."
+    echo "--------------------"
+    audit_id=$(`which python` $this_dir/get-audit-id.py --env=${ENVSUFFIX} --id=$exp -p)
+    `which python` $this_dir/get-bin-sources.py --env=${ENVSUFFIX} -a $audit_id -p
+    $build_dir/Tools/BinaryCreator/Cli/BinaryCreatorCli --input=/home/surya/racefolders/for-binaries/${audit_id}_0/input.json --reinsurance-binaries-only
+    echo "--------------------"
+done

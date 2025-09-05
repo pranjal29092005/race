@@ -1,0 +1,32 @@
+{
+{% if TopNBy == "assets" or TopNAssetsBy is defined %}
+  "TopNData": {
+    "TopNAssetsBy": "{{ TopNAssetsBy | default(sortMeasure) }}",
+    "AdditionalSortMeasure": "{{ AdditionalSortMeasure | default(additionalSortMeasure) }}",
+    "SortDirection": {{ SortDirection | default(-1) }},
+    "Count": {{ Count | default(count) }},
+    "ContractId": "{{ ContractId | default('') }}",
+    "CompareMode": {{ CompareMode | default(false) | lower }},
+    "PercentageAttributes": {{ PercentageAttributes | default(false) | lower }},
+    "AttributeList": [
+{% for attr in AttributeList | default(attributes) %}
+      "{{ attr }}"{% if not loop.last %},{% endif %}
+{% endfor %}
+    ]
+  }
+{% else %}
+  "TopNDataContract": {
+    "TopNContractsBy": "{{ TopNContractsBy | default(sortMeasure) }}",
+    "SortDirection": {{ SortDirection | default(-1) }},
+    "Count": {{ Count | default(count) }},
+    "ContractId": "{{ ContractId | default('') }}",
+    "CompareMode": {{ CompareMode | default(false) | lower }},
+    "PercentageAttributes": {{ PercentageAttributes | default(false) | lower }},
+    "AttributeList": [
+{% for attr in AttributeList | default(attributes) %}
+      "{{ attr }}"{% if not loop.last %},{% endif %}
+{% endfor %}
+    ]
+  }
+{% endif %}
+}

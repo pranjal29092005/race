@@ -1,0 +1,18 @@
+{
+{% if topnBy == "assets" %}
+  "TopNData": {
+  "TopNAssetsBy": "{{ sortMeasure }}",
+  "AdditionalSortMeasure": "{{ additionalSortMeasure }}",
+{% else %}
+  "TopNDataContract": {
+  "TopNContractsBy": "{{ sortMeasure }}",
+{% endif %}
+"Count": {{ count }},
+"AttributeList": [
+{% for attr in attributes %}
+  "{{ attr }}"
+  {% if not loop.last %},{% endif %}
+{% endfor %}
+]
+}
+}

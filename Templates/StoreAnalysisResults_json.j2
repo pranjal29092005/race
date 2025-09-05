@@ -1,0 +1,20 @@
+{
+    "StoreAnalysisResults": {
+"MeasuresAndAttributes": [
+{% for attr in attributes %}
+  "{{ attr }}"
+  {% if not loop.last %},{% endif %}
+{% endfor %}
+],
+"ContributionAttributes": [
+{% for attr in contributionAttributes %}
+  "{{ attr }}"
+  {% if not loop.last %},{% endif %}
+{% endfor %}
+],
+        "Analysis Key": "{{ akey }}",
+        "Audit Id": {{ auditId }},
+        "Portfolio Id": {{ exposureId }},
+        "Exposure Name": "{{ exposureName }}"
+    }
+}

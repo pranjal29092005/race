@@ -1,0 +1,41 @@
+{
+"Additional Measures": [
+{% for measure in measures %}
+  "{{ measure }}"
+  {% if not loop.last %},{% endif %}
+{% endfor %}
+],
+"Apply As All Perils": false,
+"Count": 10,
+"CurrencyCode": "USD",
+"Exposure Id": {{ exp_id }},
+"ObjectSubType": "{{ sov_or_portfolio }}",
+"IncludeAllContracts": true,
+"DamageFactors": [
+{% for dmg in damages %}
+  {{ dmg }}
+  {% if not loop.last %},{% endif %}
+{% endfor %}
+],
+"eventRadii": [
+{% for rad in radii %}
+  {{ rad }}
+  {% if not loop.last %},{% endif %}
+{% endfor %}
+],
+"peril": "{{ peril }}",
+"subPeril": "{{ sub_peril }}",
+"deltaOffset": {{ sep_radius }},
+"SpiderAnalysisBy": "{{ measure }}",
+"Results Key": "{{ results_key }}",
+"operator": "{{ threshold_op }}",
+"threshold": {{ threshold }},
+"damageAdjustment": 1,
+"xRes": {{ xres }},
+"yRes": {{ yres }},
+{% if heatmap_bucket is defined %}
+  "s3Bucket": "{{ heatmap_bucket }}",
+  "s3Folder": "{{ heatmap_prefix }}",
+{% endif %}
+"quantile": 50
+}

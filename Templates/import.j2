@@ -1,0 +1,9 @@
+bool loadStatus = true; 
+{% for exp in exposures %}
+  {% if exp.portfolio %}
+    loadStatus = loadStatus && ImportContractPortfolio({{ exp.id }}, {{ loop.index0 }});
+  {% else %}
+    loadStatus = loadStatus && ImportExposureFromDB({{ exp.id }}, {{ loop.index0 }});
+  {% endif %}
+{% endfor %}
+Send('Import Exposure(s)', loadStatus);

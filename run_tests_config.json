@@ -1,0 +1,41 @@
+{
+    "Server": {
+        "Race": "10.0.8.59",
+        "Db": {
+            "PG_HOST": "er-prod-vpc.cf9zefbnakej.us-east-1.rds.amazonaws.com",
+            "PG_DB": "erProd",
+            "ASSET_S3_BUCKET": "prod-p-b-er",
+            "EVENT_S3_BUCKET": "prod-p-e-er",
+            "IMPORT_S3_BUCKET": "prod-p-f-er",
+            "SMALL_EVENT_S3_BUCKET": "prod-p-e-er",
+            "AWS_DEFAULT_REGION": "us-east-1",
+            "PG_PW": "RiskAdmin",
+            "PG_USER": "dataadmin",
+            "PG_PORT": 5432,
+            "SMALL_EVENT_S3_BUCKET": "prod-p-e-er"
+        }
+    },
+    "EventId": null,
+    "Filters": {
+        "type": "or",
+        "conditions": [
+            "Country,EQ,US",
+            "Cause Of Loss,EQ,EQXX"
+        ]
+    },
+    "Exposures": [
+        732
+    ],
+    "Summary": [
+        "TIV",
+        "ContractLoss_Value All Types_EL"
+    ],
+    "Topn Assets": [
+        "TIV",
+        "ContractLoss_Value All Types_EL"
+    ],
+    "Topn Contracts": [
+        "TIV",
+        "ContractLoss_Value All Types_EL"
+    ]
+}

@@ -1,0 +1,64 @@
+{
+    "program_names": null,
+    "inception_date": null,
+    "expiration_date": null,
+    "coltoid": {
+        "col": "cause_of_loss",
+        "key": "col_name",
+        "value": "col_id"
+    },
+    "assetlevelcontractrownum": {
+        "col": "asset_contract_map"
+    },
+    "contractname_to_contractrownum_map": {
+        "col": "contractname_rownum",
+        "key": "contract_name",
+        "value": "contract_rownum"
+    },
+    "programnametoidmap": {
+        "col": "program_name_to_id",
+        "key": "program_name",
+        "value": "program_id"
+    },
+    "term_type": [
+        "PerCoverage",
+        "Exclusion",
+        "BySiteByCoverage",
+        "BySite",
+        "PerSitePerCoverage",
+        "PerSite",
+        "Sublimit",
+        "Deductible"
+    ],
+    "policy_type": null,
+    "asset_name": null,
+    "asset_number": null,
+    "latitude": null,
+    "longitude": null,
+    "value_buildings": null,
+    "value_miscellaneous": null,
+    "value_fire_arms": null,
+    "value_electronic_apparatus": null,
+    "value_time_element": null,
+    "value_money": null,
+    "value_tenant_improvement_betterments": null,
+    "value_securities": null,
+    "value_jewelry_watches_furs": null,
+    "value_contents": null,
+    "value_structures": null,
+    "value_personal_property": null,
+    "value_specie": null,
+    "value_silverware": null,
+    "value_stock_inventory": null,
+    "value_other_structures": null,
+    "value_business_interruption": null,
+    "value_extra_expense": null,
+    "value_life": null,
+    "value_refrigerated_property": null,
+    "value_property_damage": null,
+    "value_contingent_business_interruption": null,
+    "value_machinery_and_equipment": null,
+    "value_automobiles": null,
+    "tiv": null,
+    "valuation_date": null
+}

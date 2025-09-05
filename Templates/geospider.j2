@@ -1,0 +1,27 @@
+{
+"AccumulateByAttribute": {
+"Additional Measures": [
+{% for measure in measures %}
+  "{{ measure }}"
+  {% if not loop.last %},{% endif %}
+{% endfor %}
+],
+"Attributes": [
+{% for attr in attributes %}
+  "{{ attr }}"
+  {% if not loop.last %},{% endif %}
+{% endfor %}
+],
+"Count": 20,
+"Measure": "{{ measure }}",
+"Results Key": "{{ results_key }}",
+"operator": "GT",
+"threshold": {{ threshold }}
+},
+"Apply As All Perils": false,
+"CurrencyCode": "USD",
+"Exposure Id": {{ exp_id }},
+"IncludeAllContracts": true,
+"damageAdjustment": 1,
+"quantile": 50
+}

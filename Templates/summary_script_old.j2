@@ -1,0 +1,13 @@
+array<table @> @additionalaggregations;
+array<uint> indices;
+{% for i in range(analysisCount) %}
+indices.insertLast({{ i }});
+{% endfor %}
+if (!GetSummaryDetails('GetSummary', @additionalaggregations, @indices) ||
+    !ComputeContractPortfolioAndGetSummary('GetSummary',
+                                           @additionalaggregations,
+                                           @indices)) {
+    Send('Error!', 'Could Not compute additional Measures');
+    return;
+}
+Send('Additional Measures', additionalaggregations); 

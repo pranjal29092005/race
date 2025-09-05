@@ -1,0 +1,9 @@
+{% for a in analysisList %}
+{
+  string errorMessage;
+  if (!runAnalysis('Analysis{{ loop.index0 }}', {{ loop.index0 }}, errorMessage)) {
+      SendErrorWithCode(errorMessage);
+      return;
+  }
+}
+{% endfor %}

@@ -1,0 +1,34 @@
+{
+    "SpiderAnalysis": {
+        "AdditionalMeasure": [
+            "#Assets"
+{%if portfolio %}
+            ,"#Contracts"
+            ,"ContractLoss_Value All Types_GL"
+  {% endif %}
+        ],
+        "Count": 5,
+        "DamageFactors": [
+            1
+        ],
+        "SpideAnalysisBy": "ContractLoss_Value All Types_GL",
+        "deltaOffset": 1000,
+        "eventRadii": [
+            400
+        ],
+        "eventRadius": 400,
+        "gridSize": null,
+        "peril": "{{ peril }}",
+        "s3Bucket": null,
+        "s3Folder": null,
+        "subPeril": "{{ sub_peril }}",
+        "threshold": 0,
+        "viewportLRLat": {{ lr_lat }},
+        "viewportLRLon": {{ lr_lon }},
+        "viewportULLat": {{ ul_lat }},
+        "viewportULLon": {{ ul_lon }},
+        "xRes": 2048,
+        "yRes": 1435.4546004029492,
+        "zoomLevel": null
+    }
+}

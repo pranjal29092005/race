@@ -1,0 +1,5 @@
+string errorMsg;
+if(!StoreAnalysisResults('StoreAnalysisResults', {{ analysisIndex }}, errorMsg)) {
+    Send(errorMsg, 0);
+}
+Send('Analysis results saved', 1);

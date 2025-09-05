@@ -1,0 +1,9 @@
+array<uint> indices;
+{% for i in range(analysisCount) %}
+indices.insertLast({{ i }});
+{% endfor %}
+string errorMessage;
+if (!GetSummaryV2("GetSummary", @indices, errorMessage)) {
+    Send("Error!", errorMessage);
+    return;
+}

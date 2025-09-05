@@ -1,0 +1,13 @@
+{
+  "GroupBy": {
+    "GroupByAttribute": "{{ attribute }}",
+    "GroupByMeasure": "{{ measure }}",
+    "includeAllBins": true
+{% if bins %}
+  ,
+  "StartRange": {{ bins['StartRange'] }},
+  "EndRange": {{ bins['EndRange'] }},
+  "Descriptions": {{ bins['desc'] }}
+  {% endif %}
+  }
+}

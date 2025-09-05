@@ -1,0 +1,49 @@
+{
+    "Analysis Date": "2017-02-28",
+    "Contribution": {
+        "GroupByAttributes": ["State", "Country", "Geocoded Resolution"],
+        "GroupByMeasures": ["TIV", "ContractLoss_Value All Types_EL"]
+    },
+    "DotMap": {
+        "OverlayParams": [{
+            "ALPHA": 240,
+            "ALPHAALL": 80,
+            "BLUE": 255,
+            "BLUEALL": 255,
+            "GREEN": 0,
+            "GREENALL": 0,
+            "GetAllAssetOverlay": true,
+            "GetEventsFilterOverlay": false,
+            "IsPortfolio": true,
+            "LatNW": 60.53902131503,
+            "LatSE": -5.88794768423773,
+            "LonNW": -147.21158599853516,
+            "LonSE": -77.16275787353516,
+            "PixSize": 2,
+            "RED": 0,
+            "REDALL": 0,
+            "XImageSize": 797,
+            "YImageSize": 938,
+            "mapZoom": 4
+        }]
+    },
+    "Exposure Group": 100000194,
+    "ExposureFilterSets": {
+        "AssetModel": "ERBASICS"
+    },
+    "Summary": [
+        "#Exposures",
+        "#Assets",
+        "#Contracts",
+        "TIV",
+        "ContractLoss_Value All Types_EL"
+    ],
+    "Topn Assets": {
+        "AdditionalMeasures": [
+            "ContractLoss_Value All Types_EL",
+            "TIV"
+        ],
+        "Count": 25,
+        "TopnBy": "ContractLoss_Value All Types_EL"
+    }
+}

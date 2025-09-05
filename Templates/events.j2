@@ -1,0 +1,15 @@
+"Events": [
+{% for e in events %}
+  {
+  "EventID": {{ e.id }},
+  "EventName": "{{ e.name }}",
+  "SeverityModelID": {{ e.sev_id }},
+  "deltaLon": {{ e.delta.lon }},
+  "deltaLat": {{ e.delta.lat }},
+  "eventType": "{{ e.type }}",
+  "peril": "{{ e.peril }}",
+  "subperil": "{{ e.subPeril }}",
+  "source": "{{ e.source }}"
+  } {% if not loop.last %},{% endif %}
+{% endfor %}
+]

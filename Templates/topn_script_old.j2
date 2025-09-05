@@ -1,0 +1,18 @@
+array<table @> @topNData;
+array<uint> indices;
+{% for i in range(analysisCount) %}
+indices.insertLast({{ i }});
+{% endfor %}
+{% if topnBy == "assets" %}
+if (!TopNAssets('TopNData', @topNData, @indices)) {
+{% else %}
+if (!TopNContract('TopNDataContract', topNData, @indices, false)) {
+{% endif %}
+    Send('Error!', 'Could not caluclate TopN');
+    return;
+}
+{% if topnBy == "assets" %}
+Send('TopN Data', topNData); 
+{% else %}
+Send('TopNContractData', topNData); 
+{% endif %}

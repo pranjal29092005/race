@@ -1,0 +1,11 @@
+{
+"CenterLat": {{ lat }},
+"CenterLon": {{ lon }},
+"type": "Feature",
+"properties": {"UserShapeType": "Circle"},
+"Concentrics": [
+{% for item in damage %}
+{ "Intensity": {{ item.intensity }}, "Radii": {{ item.radius }} } {% if not loop.last %},{% endif %}
+{% endfor %}
+]
+}

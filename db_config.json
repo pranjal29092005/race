@@ -1,0 +1,66 @@
+{
+    "admin": {
+        "platform": "Pg",
+        "database": "erAdmin",
+        "host": "er-admin-cfg.cf9zefbnakej.us-east-1.rds.amazonaws.com",
+        "user": "root",
+        "pw": "Eigen!26-Jul-2015!Prism",
+        "port": 5432
+    },
+    "prod": {
+        "platform": "Pg",
+        "database": "erProd",
+        "host": "er-prod-vpc.cf9zefbnakej.us-east-1.rds.amazonaws.com",
+        "user": "gis_user",
+        "pw": "S6xsyV!3mh@pJfWzC",
+        "port": 5432
+    },
+    "prod2": {
+        "platform": "Pg",
+        "database": "erProdEU",
+        "host": "er-prod-vpc.c994tdzbps4o.eu-west-1.rds.amazonaws.com",
+        "user": "dataadmin",
+        "pw": "RiskAdmin",
+        "port": 5432
+    },
+    "uat": {
+        "platform": "Pg",
+        "database": "erUAT",
+        "host": "er-preprod-vpc.cf9zefbnakej.us-east-1.rds.amazonaws.com",
+        "user": "dataadmin",
+        "pw": "RiskAdmin",
+        "port": 5432
+    },
+    "integration": {
+        "platform": "Pg",
+        "database": "erINT",
+        "host": "er-preprod-vpc.cf9zefbnakej.us-east-1.rds.amazonaws.com",
+        "user": "dataadmin",
+        "pw": "RiskAdmin",
+        "port": 5432
+    },
+    "trial": {
+        "platform": "Pg",
+        "database": "erTrial",
+        "host": "erdb-vpc.cksefz1vwqmf.us-east-1.rds.amazonaws.com",
+        "user": "eradmin",
+        "pw": "RiskAdmin",
+        "port": 5432
+    },
+    "qa": {
+        "platform": "Pg",
+        "database": "erQA",
+        "host": "erdb-vpc.cksefz1vwqmf.us-east-1.rds.amazonaws.com",
+        "user": "eradmin",
+        "pw": "RiskAdmin",
+        "port": 5432
+    },
+    "alpha": {
+        "platform": "Pg",
+        "database": "erAlpha",
+        "host": "erdb-vpc.cksefz1vwqmf.us-east-1.rds.amazonaws.com",
+        "user": "eradmin",
+        "pw": "RiskAdmin",
+        "port": 5432
+    }
+}

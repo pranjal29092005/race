@@ -1,0 +1,30 @@
+{
+"AndOr": "AND",
+"FilterList":
+[
+{
+"AndOr": "{{ andor }}",
+"AssetType": "Site",
+"Attribute": "{{ attribute }}",
+"Operator": "{{ operator }}",
+{% if value is string %}
+"Value": "{{ value }}"
+{% elif value is sequence %}
+"Value": [ 
+  {% for v in value %}
+    {% if v is string %}
+    "{{ v }}"
+    {% else %}
+    {{ v }}
+    {% endif %}
+    {% if not loop.last %}
+      ,
+    {% endif %}
+  {% endfor %}
+  ]
+{% else %}
+  "Value": {{ v }}
+{% endif %}
+}
+]
+}
