@@ -1,36 +1,242 @@
-# Environment files
-.env
+# ===========================================
+# PRODUCTION-LEVEL GITIGNORE
+# ===========================================
 
-# Python cache
+# Environment files and secrets
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.env.*.local
+*.pem
+*.key
+config.json
+secrets.json
+
+# Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+*$py.class
+*.so
 .Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
 
 # Virtual environments
 venv/
 env/
 ENV/
+env.bak/
+venv.bak/
+.venv/
+.virtualenv/
 
-# IDE files
+# Pipenv
+Pipfile.lock
+
+# PEP 582
+__pypackages__/
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.npm
+.eslintcache
+.node_repl_history
+*.tgz
+.yarn-integrity
+.cache/
+
+# Package managers
+package-lock.json
+yarn.lock
+.pnpm-debug.log*
+
+# IDE and Editors
 .vscode/
 .idea/
 *.swp
 *.swo
+*~
+.project
+.metadata
+.settings/
+*.sublime-project
+*.sublime-workspace
+.vscode-test/
 
-# OS files
+# OS generated files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
+Desktop.ini
 
-# Log files
+# Logs and databases
 *.log
+*.sql
+*.sqlite
+*.sqlite3
+*.db
 
-# Output files
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+.nyc_output
+
+# Test files
+.coverage
+htmlcov/
+.tox/
+.nox/
+.pytest_cache/
+.hypothesis/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
 output/
-downloads/
 extracted/
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
 
 # Temporary files
 *.tmp
 *.temp
+*.bak
+*.backup
+*~
+.#*
+
+# Docker
+Dockerfile.prod
+docker-compose.override.yml
+.dockerignore
+
+# AWS
+.aws/
+aws-exports.js
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# Kubernetes
+*.kubeconfig
+
+# Application specific
+gunicorn.log
+*.sock
+celerybeat-schedule.*
+
+# WebSocket/FastAPI specific
+uvicorn.log
+fastapi.log
+
+# Data files (add/remove as needed)
+*.csv
+*.json.backup
+*.xml.backup
+
+# Documentation build
+docs/_build/
+site/
+
+# JetBrains IDEs
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# Redis
+dump.rdb
+
+# Local development
+.local/
+local_settings.py
+
+# MacOS
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk

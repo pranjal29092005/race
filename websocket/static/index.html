@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Processing Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn-success:hover {
+            background-color: #1e7e34;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        .status-panel {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .progress-container {
+            margin: 20px 0;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 25px;
+            background-color: #e9ecef;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #007bff, #28a745);
+            width: 0%;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        .message-log {
+            background: #000;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 5px;
+            height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+        .timestamp {
+            color: #00aaff;
+        }
+        .error {
+            color: #ff6b6b;
+        }
+        .success {
+            color: #51cf66;
+        }
+        .warning {
+            color: #ffd43b;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        .connection-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+        }
+        .connected {
+            background-color: #28a745;
+        }
+        .disconnected {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="connection-status" id="connectionStatus">Disconnected</div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>🏦 Portfolio Processing Dashboard</h1>
+            <p>Real-time WebSocket Portfolio Analysis System</p>
+        </div>
+
+        <div class="controls">
+            <button class="btn-primary" onclick="connectWebSocket()">🔌 Connect WebSocket</button>
+            <button class="btn-success" onclick="startProcessing('portfolio')">📊 Calculate Portfolio</button>
+            <button class="btn-success" onclick="startProcessing('assets')">💰 Process Assets</button>
+            <button class="btn-success" onclick="startProcessing('investments')">📈 Analyze Investments</button>
+            <button class="btn-danger" onclick="disconnectWebSocket()">🔌 Disconnect</button>
+        </div>
+
+        <div class="status-panel">
+            <h3>📊 Processing Status</h3>
+            <div id="currentStatus">Ready to start processing...</div>
+            
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill">0%</div>
+                </div>
+                <div id="progressText">No active processing</div>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="totalItems">0</div>
+                <div class="stat-label">Total Items</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="processedItems">0</div>
+                <div class="stat-label">Processed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="processingTime">0s</div>
+                <div class="stat-label">Processing Time</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="processingSpeed">0/min</div>
+                <div class="stat-label">Items/Minute</div>
+            </div>
+        </div>
+
+        <div>
+            <h3>📋 Message Log</h3>
+            <div class="message-log" id="messageLog"></div>
+        </div>
+    </div>
+
+    <script>
+        let ws = null;
+        let startTime = null;
+        let processedCount = 0;
+        let totalCount = 0;
+
+        function connectWebSocket() {
+            if (ws) {
+                ws.close();
+            }
+
+            ws = new WebSocket('ws://localhost:8000/ws');
+            
+            ws.onopen = function(event) {
+                updateConnectionStatus(true);
+                logMessage('WebSocket connected successfully!', 'success');
+            };
+            
+            ws.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                handleWebSocketMessage(data);
+            };
+            
+            ws.onclose = function(event) {
+                updateConnectionStatus(false);
+                logMessage('WebSocket connection closed', 'warning');
+            };
+            
+            ws.onerror = function(error) {
+                logMessage('WebSocket error: ' + error, 'error');
+            };
+        }
+
+        function disconnectWebSocket() {
+            if (ws) {
+                ws.close();
+                ws = null;
+            }
+        }
+
+        function startProcessing(type) {
+            if (!ws || ws.readyState !== WebSocket.OPEN) {
+                logMessage('Please connect WebSocket first!', 'error');
+                return;
+            }
+
+            const message = {
+                type: type,
+                user_id: 'demo_user_123'
+            };
+
+            ws.send(JSON.stringify(message));
+            logMessage(`Starting ${type} processing...`, 'success');
+            startTime = Date.now();
+            processedCount = 0;
+        }
+
+        function handleWebSocketMessage(data) {
+            console.log('Received:', data);
+
+            switch(data.type) {
+                case 'progress':
+                    updateProgress(data.current, data.total, data.message);
+                    break;
+                case 'completed':
+                    handleCompletion(data);
+                    break;
+                case 'error':
+                    logMessage(`Error: ${data.message}`, 'error');
+                    break;
+                case 'status':
+                    logMessage(`Status: ${data.message}`, 'warning');
+                    break;
+                default:
+                    logMessage(`Received: ${JSON.stringify(data)}`, 'success');
+            }
+        }
+
+        function updateProgress(current, total, message) {
+            processedCount = current;
+            totalCount = total;
+            
+            const percentage = Math.round((current / total) * 100);
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            const currentStatus = document.getElementById('currentStatus');
+            
+            progressFill.style.width = percentage + '%';
+            progressFill.textContent = percentage + '%';
+            progressText.textContent = `${current}/${total} items processed`;
+            currentStatus.textContent = message || `Processing item ${current} of ${total}`;
+            
+            // Update stats
+            document.getElementById('totalItems').textContent = total;
+            document.getElementById('processedItems').textContent = current;
+            
+            if (startTime) {
+                const elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+                document.getElementById('processingTime').textContent = elapsedSeconds + 's';
+                
+                if (elapsedSeconds > 0) {
+                    const itemsPerMinute = Math.round((current / elapsedSeconds) * 60);
+                    document.getElementById('processingSpeed').textContent = itemsPerMinute + '/min';
+                }
+            }
+            
+            logMessage(`Progress: ${current}/${total} (${percentage}%) - ${message}`, 'success');
+        }
+
+        function handleCompletion(data) {
+            logMessage(`✅ Processing completed! ${data.message}`, 'success');
+            
+            const currentStatus = document.getElementById('currentStatus');
+            currentStatus.textContent = `Completed: ${data.message}`;
+            
+            // Show completion animation
+            const progressFill = document.getElementById('progressFill');
+            progressFill.style.background = 'linear-gradient(45deg, #28a745, #20c997)';
+            
+            setTimeout(() => {
+                progressFill.style.background = 'linear-gradient(45deg, #007bff, #28a745)';
+            }, 2000);
+        }
+
+        function updateConnectionStatus(connected) {
+            const status = document.getElementById('connectionStatus');
+            if (connected) {
+                status.textContent = 'Connected';
+                status.className = 'connection-status connected';
+            } else {
+                status.textContent = 'Disconnected';
+                status.className = 'connection-status disconnected';
+            }
+        }
+
+        function logMessage(message, type = 'info') {
+            const log = document.getElementById('messageLog');
+            const timestamp = new Date().toLocaleTimeString();
+            const typeClass = type === 'error' ? 'error' : type === 'success' ? 'success' : type === 'warning' ? 'warning' : '';
+            
+            log.innerHTML += `<div><span class="timestamp">[${timestamp}]</span> <span class="${typeClass}">${message}</span></div>`;
+            log.scrollTop = log.scrollHeight;
+        }
+
+        // Auto-connect on page load
+        window.onload = function() {
+            logMessage('Portfolio Processing Dashboard loaded', 'success');
+            logMessage('Click "Connect WebSocket" to start real-time communication', 'warning');
+        };
+    </script>
+</body>
+</html>
